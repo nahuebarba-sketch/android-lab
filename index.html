@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#101820">
+  <title>ANDROID LAB — Monitor del sistema</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <div class="brand-mark" aria-hidden="true"><span></span><span></span><span></span></div>
+      <div class="brand">
+        <div class="eyebrow">HERRAMIENTA DE DIAGNÓSTICO</div>
+        <h1>ANDROID <b>LAB</b></h1>
+      </div>
+      <div class="live-pill"><i></i><span id="liveState">INICIANDO</span></div>
+    </header>
+
+    <main>
+      <section class="hero panel">
+        <div>
+          <div class="eyebrow">PANEL DEL DISPOSITIVO</div>
+          <h2>Monitor del sistema</h2>
+          <p class="muted">Lecturas disponibles en este navegador, sin permisos especiales.</p>
+        </div>
+        <div class="clock-wrap">
+          <div class="eyebrow">HORA LOCAL</div>
+          <div id="clock" class="clock">--:--:--</div>
+          <div id="dateLabel" class="muted small">Preparando…</div>
+        </div>
+      </section>
+
+      <section class="metric-grid">
+        <article class="metric panel">
+          <div class="metric-head"><span class="metric-icon battery-icon">▰</span><span class="eyebrow">BATERÍA</span></div>
+          <div class="metric-value"><span id="batteryLevel">—</span><small id="batteryUnit">%</small></div>
+          <div class="meter"><div id="batteryBar" class="meter-fill" style="width:0%"></div></div>
+          <div id="batteryStatus" class="metric-foot">Consultando disponibilidad…</div>
+        </article>
+        <article class="metric panel">
+          <div class="metric-head"><span class="metric-icon temp-icon">°</span><span class="eyebrow">TEMPERATURA</span></div>
+          <div class="metric-value"><span id="temperature">—</span><small>°C</small></div>
+          <div class="status-tag unavailable" id="tempTag">NO EXPUESTA</div>
+          <div class="metric-foot">El navegador no ofrece el sensor térmico de batería.</div>
+        </article>
+        <article class="metric panel">
+          <div class="metric-head"><span class="metric-icon power-icon">ϟ</span><span class="eyebrow">ALIMENTACIÓN</span></div>
+          <div class="metric-value textual" id="powerState">—</div>
+          <div class="status-tag" id="powerTag">ESPERANDO DATOS</div>
+          <div class="metric-foot">Estado de carga comunicado por el navegador, si es compatible.</div>
+        </article>
+        <article class="metric panel">
+          <div class="metric-head"><span class="metric-icon system-icon">⌘</span><span class="eyebrow">SISTEMA</span></div>
+          <div class="metric-value textual" id="systemInfo">WEB</div>
+          <div id="systemDetails" class="metric-foot">Recopilando capacidades del navegador…</div>
+          <div class="status-tag neutral">DATOS LIMITADOS</div>
+        </article>
+      </section>
+
+      <section class="panel chart-panel">
+        <div class="section-head">
+          <div>
+            <div class="eyebrow">SEGUIMIENTO</div>
+            <h2>Historial de batería</h2>
+          </div>
+          <div class="chart-legend"><span class="legend-dot"></span> Nivel de carga</div>
+        </div>
+        <div class="chart-wrap">
+          <canvas id="batteryChart" aria-label="Gráfico del nivel de batería" role="img"></canvas>
+          <div id="chartEmpty" class="chart-empty">El historial aparecerá cuando el navegador permita leer la batería.</div>
+        </div>
+        <div class="chart-bottom"><span>Últimas lecturas de esta sesión</span><span id="sampleCount">0 muestras</span></div>
+      </section>
+
+      <section class="lower-grid">
+        <article class="panel info-panel">
+          <div class="section-head">
+            <div><div class="eyebrow">CAPACIDADES</div><h2>Qué podemos medir</h2></div>
+          </div>
+          <div class="capability-row"><span class="cap-dot yes"></span><div><b>Nivel y carga de batería</b><small>Solo si el navegador expone Battery Status API.</small></div><strong id="capBattery">COMPROBANDO</strong></div>
+          <div class="capability-row"><span class="cap-dot no"></span><div><b>Temperatura real de batería</b><small>Requiere una interfaz nativa de Android.</small></div><strong>NO DISPONIBLE</strong></div>
+          <div class="capability-row"><span class="cap-dot maybe"></span><div><b>CPU y corriente eléctrica</b><small>El navegador no ofrece mediciones fiables de estos valores.</small></div><strong>LIMITADO</strong></div>
+        </article>
+
+        <article class="panel test-panel">
+          <div class="section-head">
+            <div><div class="eyebrow">BANCO DE PRUEBAS</div><h2>Sesión de observación</h2></div>
+          </div>
+          <p class="muted">Registrá el nivel de batería disponible mientras usás el dispositivo normalmente. Esta web app no fuerza el procesador ni modifica la batería.</p>
+          <div class="test-actions">
+            <button id="markButton" class="button primary">＋ Añadir marca</button>
+            <button id="clearButton" class="button secondary">Reiniciar historial</button>
+          </div>
+          <div id="eventLog" class="event-log"><div class="log-entry"><span class="log-time">SISTEMA</span><span>Panel listo. Esperando datos compatibles.</span></div></div>
+        </article>
+      </section>
+
+      <section class="notice">
+        <span class="notice-symbol">i</span>
+        <p><b>Transparencia de medición:</b> una web app no puede ordenar a un teléfono común que caliente o enfríe la batería. Los campos no disponibles se muestran como tales; no se inventan lecturas. Para acceder a sensores y controles adicionales necesitaremos una versión nativa Android.</p>
+      </section>
+    </main>
+
+    <footer><span>ANDROID LAB <b>v0.1</b></span><span>MONITORIZACIÓN · SOLO LECTURA</span></footer>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>
